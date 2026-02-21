@@ -7,11 +7,11 @@ const jwt = require('jsonwebtoken');
 const db = require('./database');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const SECRET_KEY = 'supersecretkey'; // Use env variable in production
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Frontend URL
+    origin: ['http://localhost:5173', 'https://banking-app-with-ai.vercel.app'], // Frontend URL
     credentials: true
 }));
 app.use(bodyParser.json());
@@ -58,8 +58,8 @@ app.post('/login', (req, res) => {
             (err) => {
                 if (err) return res.status(500).json({ error: 'Token storage failed' });
 
-                // Updated cookie settings for compatibility
-                res.cookie('token', token, { httpOnly: true, maxAge: 3600000, sameSite: 'lax', secure: false });
+                // Updated cookie settings for compatibility with cross-origin Vercel to Render requests
+                res.cookie('token', token, { httpOnly: true, maxAge: 3600000, sameSite: 'none', secure: true });
                 res.json({ message: 'Login successful', customer_name: user.customer_name });
             }
         );
