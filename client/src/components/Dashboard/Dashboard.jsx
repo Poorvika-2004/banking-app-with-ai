@@ -29,6 +29,7 @@ const Dashboard = () => {
             console.error(error);
             if (error.response && error.response.status === 401) {
                 console.log("Unauthorized access to profile");
+                navigate('/login');
             }
         }
     };
@@ -46,6 +47,7 @@ const Dashboard = () => {
             console.error(error);
             if (error.response && error.response.status === 401) {
                 console.log("Unauthorized access to dashboard");
+                navigate('/login');
             } else {
                 alert('Failed to fetch balance');
             }

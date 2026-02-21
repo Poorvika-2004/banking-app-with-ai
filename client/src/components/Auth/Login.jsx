@@ -7,6 +7,7 @@ const Login = () => {
         customer_id: '',
         password: ''
     });
+    const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -19,16 +20,18 @@ const Login = () => {
             await axios.post(`${import.meta.env.VITE_API_URL}/login`, formData, {
                 withCredentials: true
             });
+            setErrorMsg('');
             navigate('/dashboard');
         } catch (error) {
             console.error(error);
-            alert('Login failed. Check credentials.');
+            setErrorMsg(error.response?.data?.error || 'Login failed. Check credentials.');
         }
     };
 
     return (
         <div className="glass-panel form-container">
             <h2>Welcome Back</h2>
+            {errorMsg && <div style={{ color: '#ff4d4f', marginBottom: '1rem', textAlign: 'center', backgroundColor: 'rgba(255, 77, 79, 0.1)', padding: '0.5rem', borderRadius: '4px' }}>{errorMsg}</div>}
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
