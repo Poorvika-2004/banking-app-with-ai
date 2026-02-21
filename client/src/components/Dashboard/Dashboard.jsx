@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const handleFetchProfile = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/profile', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
                 withCredentials: true
             });
             setUserProfile(res.data.user);
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
     const handleCheckBalance = async (showModal = true) => {
         try {
-            const res = await axios.get('http://localhost:5000/balance', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/balance`, {
                 withCredentials: true
             });
             setBalance(res.data.balance);
@@ -59,7 +59,7 @@ const Dashboard = () => {
     const handleTransfer = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/transfer', transferData, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/transfer`, transferData, {
                 withCredentials: true
             });
             alert('Transfer successful!');
